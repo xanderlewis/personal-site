@@ -1,0 +1,27 @@
+[
+    {
+        "name": "color-palettes",
+        "url": "https://github.com/xanderlewis/colour-palettes",
+        "desc": "Generate colour palettes from an image."
+    },
+    {
+        "name": "What Chord Are You?",
+        "url": "http://xanderlewis.co.uk/fun/whatchordareyou",
+        "desc": "Find out what you would sound like if you were a set of notes played on a piano. Enter your name and hear your personal chord."
+    },
+    {
+        "name": "Simple Harmonic Motion",
+        "url": "https://github.com/xanderlewis/simple-harmonic-motion",
+        "desc": "My first iOS app. An interactive simulation of simple harmonic motion."
+    },
+    {
+        "name": "Spiroulettes",
+        "url": "http://xanderlewis.co.uk/fun/spiroulettes",
+        "desc": "Spirograph-esque parametric curve generator."
+    },
+    {
+        "name": "Tree Generator",
+        "url": "http://xanderlewis.co.uk/fun/treegenerator",
+        "desc": "Have fun making some pretty binary trees."
+    }
+]
