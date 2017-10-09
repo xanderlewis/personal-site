@@ -5,9 +5,9 @@
 # Site
 title: Xander Lewis
 subtitle:
-description: I like music and programming and maths and other things.
+description: Music, programming, maths and other cool things...
 author: Xander Lewis
-language: English (UK)
+language: en-uk
 timezone:
 
 # URL
@@ -84,9 +84,8 @@ deploy:
   remotePath: /xanderlewis
   port: 22
   verbose: true
-  ignore: /fun
 
 # Exclude Files/Folders
 exclude:
   - .DS_Store
-  - fun
+  - experiments

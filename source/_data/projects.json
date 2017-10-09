@@ -6,7 +6,7 @@
     },
     {
         "name": "What Chord Are You?",
-        "url": "http://xanderlewis.co.uk/fun/whatchordareyou",
+        "url": "/experiments/whatchordareyou",
         "desc": "Find out what you would sound like if you were a set of notes played on a piano. Enter your name and hear your personal chord."
     },
     {
@@ -16,12 +16,12 @@
     },
     {
         "name": "Spiroulettes",
-        "url": "http://xanderlewis.co.uk/fun/spiroulettes",
+        "url": "/experiments/spiroulettes",
         "desc": "Spirograph-esque parametric curve generator."
     },
     {
         "name": "Tree Generator",
-        "url": "http://xanderlewis.co.uk/fun/treegenerator",
+        "url": "/experiments/treegenerator",
         "desc": "Have fun making some pretty binary trees."
     }
 ]
