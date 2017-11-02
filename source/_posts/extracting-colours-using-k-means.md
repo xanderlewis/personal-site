@@ -44,7 +44,7 @@ Our distance function could look like this:
 ```javascript
     // Distance function
     function euclideanDistance(a, b) {
-        var sum = 0;
+        let sum = 0;
         for (let i = 0; i < a.length; i++) {
             sum += Math.pow(b[i] - a[i], 2);
         }
@@ -82,21 +82,17 @@ The algorithm is said to have 'converged' when nothing changes between assignmen
 
 ### Helper functions
 
-Let's get some helper functions defined: one for calculating the range of a given dataset, and one for generating a random integer within a given range.
+Let's get some helper functions defined: one for calculating the range of a given dataset, and one for generating a random integer within a given range. The 'range' of an n-dimensional data set is just a set of ranges—one for each dimension.
 
 ```javascript
     // Calculate range of a one-dimensional data set
     function rangeOf(data) {
-        return data.reduce(function(total,current) {
-            if (current < total.min) { total.min = current; }
-            if (current > total.max) { total.max = current; }
-            return total;
-        }, {min: data[0], max: data[0]});
+        return {min: Math.min(data), max: Math.max(data)};
     }
 
     // Calculate range of an n-dimensional data set
     function rangesOf(data) {
-        var ranges = [];
+        let ranges = [];
         for (let i = 0; i < data[0].length; i++) {
             ranges.push(rangeOf(data.map(x => x[i])));
         }
@@ -117,15 +113,15 @@ Assuming we've got those two, we can now write the code for the three steps of t
 
 ### Step One - Initialisation
 
-For the number of centroids desired (k), we generate a random integer point in the range of the data set provided and append it to an array. Each point in the array represents the position of a centroid.
+For the number of centroids desired (k), we generate a random integer-valued point in the range of the data set provided and append it to an array. Each point in the array represents the position of a centroid. The centroids, of course, have the same number of dimensions as the data.
 
 ```javascript
     function initialiseCentroidsRandomly(data, k) {
-        var ranges = rangesOf(data);
-        var centroids = [];
+        let ranges = rangesOf(data);
+        let centroids = [];
         for (let i = 0; i < k; i++) {
-            var centroid = [];
-            for (var r in ranges) {
+            let centroid = [];
+            for (let r in ranges) {
                 centroid.push(randomIntBetween(ranges[r].min, ranges[r].max));
             }
             centroids.push(centroid);
@@ -138,21 +134,18 @@ For the number of centroids desired (k), we generate a random integer point in t
 
 ### Step Two - Assignment
 
-This is where we assign data points to clusters. For each point, we check its distance to each centroid and, when we find the nearest, we add the point to the associated cluster.
+This is where we assign data points to clusters. For each point, we choose the centroid that is the minimum distance away and we append the point to the associated cluster.
+
+I'm using the Array's [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function along with an [arrow function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) here, so have a quick look at those if you're not quite sure what's going on.
 
 ```javascript
     function clusterDataPoints(data, centroids) {
-        var clusters = [];
-        centroids.forEach(function () {
+        let clusters = [];
+        centroids.forEach(function() {
             clusters.push([]);
         });
-        data.forEach(function (point) {
-            var nearestCentroid = centroids[0];
-            centroids.forEach(function (centroid) {
-                if (euclideanDistance(point, centroid) < euclideanDistance(point, nearestCentroid)) {
-                    nearestCentroid = centroid;
-                }
-            });
+        data.forEach(function(point) {
+            let nearestCentroid = Math.min(centroids.map(x => euclideanDistance(point, x)));
             clusters[centroids.indexOf(nearestCentroid)].push(point);
         });
         return clusters;
@@ -163,13 +156,15 @@ This is where we assign data points to clusters. For each point, we check its di
 
 ### Step Three - Update
 
-For each cluster, we calculate the mean of its enclosing data points and set it as the associated centroid's position.
+For each cluster, we calculate the mean of its enclosing data points and set it as the associated centroid's position. We then return the new set of centroids.
+
+There's actually another function being used here called *meanPoint*. I won't go into to detail because it's fairly obvious to implement yourself. It returns a point where each component is the mean of the corresponding component value in each of the passed points.
 
 ```javascript
     function getNewCentroids(clusters) {
-        var centroids = [];
-        clusters.forEach(function (cluster) {
-            centroids.push(stats.meanPoint(cluster));
+        let centroids = [];
+        clusters.forEach(function(cluster) {
+            centroids.push(meanPoint(cluster));
         });
         return centroids;
     }
@@ -177,7 +172,7 @@ For each cluster, we calculate the mean of its enclosing data points and set it 
 
 <br>
 
-### Oh, one more thing
+### Oh, one more thing!
 
 There is one issue with this algorithm, and it's that sometimes the clusters become empty. There isn't much of a consensus on what to do when this happens, but some possible approaches are to:
 
